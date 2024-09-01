@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Wallet3Model.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Divisa">
+    <Key>
+      <PropertyRef Name="DivisaId" />
+    </Key>
+    <Property Name="DivisaId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nombre" Type="varchar" MaxLength="15" Nullable="false" />
+    <Property Name="Valor" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Historial">
+    <Key>
+      <PropertyRef Name="HistorialId" />
+    </Key>
+    <Property Name="HistorialId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="DivisaId" Type="int" Nullable="false" />
+    <Property Name="TipoTransaccion" Type="varchar" MaxLength="10" Nullable="false" />
+    <Property Name="Monto" Type="money" Nullable="false" />
+    <Property Name="Fecha" Type="date" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'Wallet3.dbo.MisMonedas' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="MisMonedas">
+    <Key>
+      <PropertyRef Name="DivisaId" />
+      <PropertyRef Name="UsuarioId" />
+      <PropertyRef Name="Saldo" />
+    </Key>
+    <Property Name="DivisaId" Type="int" Nullable="false" />
+    <Property Name="UsuarioId" Type="int" Nullable="false" />
+    <Property Name="Saldo" Type="money" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="UsuarioId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Email" Type="varchar" MaxLength="25" Nullable="false" />
+    <Property Name="Clave" Type="varchar" MaxLength="8" Nullable="false" />
+    <Property Name="Saldo" Type="money" Nullable="false" />
+    <Property Name="Estado" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__Historial__Divis__3F466844">
+    <End Role="Divisa" Type="Self.Divisa" Multiplicity="1" />
+    <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Divisa">
+        <PropertyRef Name="DivisaId" />
+      </Principal>
+      <Dependent Role="Historial">
+        <PropertyRef Name="DivisaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Historial__Usuar__3E52440B">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Historial">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MisMoneda__Divis__3A81B327">
+    <End Role="Divisa" Type="Self.Divisa" Multiplicity="1" />
+    <End Role="MisMonedas" Type="Self.MisMonedas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Divisa">
+        <PropertyRef Name="DivisaId" />
+      </Principal>
+      <Dependent Role="MisMonedas">
+        <PropertyRef Name="DivisaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MisMoneda__Usuar__3B75D760">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="MisMonedas" Type="Self.MisMonedas" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="MisMonedas">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Wallet3ModelStoreContainer">
+    <EntitySet Name="Divisa" EntityType="Self.Divisa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Historial" EntityType="Self.Historial" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MisMonedas" EntityType="Self.MisMonedas" store:Type="Tables" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [MisMonedas].[DivisaId] AS [DivisaId], 
+    [MisMonedas].[UsuarioId] AS [UsuarioId], 
+    [MisMonedas].[Saldo] AS [Saldo]
+    FROM [dbo].[MisMonedas] AS [MisMonedas]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK__Historial__Divis__3F466844" Association="Self.FK__Historial__Divis__3F466844">
+      <End Role="Divisa" EntitySet="Divisa" />
+      <End Role="Historial" EntitySet="Historial" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Historial__Usuar__3E52440B" Association="Self.FK__Historial__Usuar__3E52440B">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="Historial" EntitySet="Historial" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MisMoneda__Divis__3A81B327" Association="Self.FK__MisMoneda__Divis__3A81B327">
+      <End Role="Divisa" EntitySet="Divisa" />
+      <End Role="MisMonedas" EntitySet="MisMonedas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MisMoneda__Usuar__3B75D760" Association="Self.FK__MisMoneda__Usuar__3B75D760">
+      <End Role="Usuario" EntitySet="Usuario" />
+      <End Role="MisMonedas" EntitySet="MisMonedas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

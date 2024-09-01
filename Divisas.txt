@@ -1,0 +1,15 @@
+dolar 1
+
+euro EUR 0.93
+yen japones JPY 130.82
+quetzal GTQ 7.81
+peso mexicano MXN 18.43
+Yuan chino CNH 6.88
+
+Bitcoin BTC 0.000036
+Dogecoin DOGE 13.58
+Ether ETH 0.00057
+Theter USDT 1.00
+ETC ETC 0.050
+Litecoin LTC 0.011
+

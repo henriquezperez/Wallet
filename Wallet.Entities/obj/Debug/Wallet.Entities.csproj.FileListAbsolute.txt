@@ -1,0 +1,12 @@
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\bin\Debug\Wallet.Entities.dll.config
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\bin\Debug\Wallet.Entities.dll
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\bin\Debug\Wallet.Entities.pdb
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\bin\Debug\EntityFramework.dll
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\bin\Debug\EntityFramework.xml
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\obj\Debug\Wallet.Entities.csproj.AssemblyReference.cache
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\obj\Debug\Wallet.Entities.csproj.CoreCompileInputs.cache
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\obj\Debug\Wallet.Entities.csproj.CopyComplete
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\obj\Debug\Wallet.Entities.dll
+C:\Users\Administrator\source\repos\Wallet\Wallet.Entities\obj\Debug\Wallet.Entities.pdb

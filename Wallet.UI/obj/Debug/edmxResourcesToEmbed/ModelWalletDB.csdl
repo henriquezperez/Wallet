@@ -1,0 +1,194 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="WalletModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Compra">
+    <Key>
+      <PropertyRef Name="CompraId" />
+    </Key>
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="CompraId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MonedaId" Type="Int32" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Moneda" Relationship="Self.FK__Compra__MonedaId__3E52440B" FromRole="Compra" ToRole="Moneda" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Compra__UsuarioI__3D5E1FD2" FromRole="Compra" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Historial">
+    <Key>
+      <PropertyRef Name="HistorialId" />
+    </Key>
+    <Property Name="HistorialId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="MonedaId" Type="Int32" Nullable="false" />
+    <Property Name="TipoTransaccion" Type="String" MaxLength="10" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Moneda" Relationship="Self.FK__Historial__Moned__45F365D3" FromRole="Historial" ToRole="Moneda" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Historial__Usuar__44FF419A" FromRole="Historial" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="Moneda">
+    <Key>
+      <PropertyRef Name="MonedaId" />
+    </Key>
+    <Property Name="MonedaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Nombre" Type="String" MaxLength="5" FixedLength="false" Unicode="false" />
+    <Property Name="Valor" Type="Decimal" Precision="19" Scale="4" />
+    <NavigationProperty Name="Compras" Relationship="Self.FK__Compra__MonedaId__3E52440B" FromRole="Moneda" ToRole="Compra" />
+    <NavigationProperty Name="Historials" Relationship="Self.FK__Historial__Moned__45F365D3" FromRole="Moneda" ToRole="Historial" />
+    <NavigationProperty Name="MisMonedas" Relationship="Self.FK__MisMoneda__Moned__3A81B327" FromRole="Moneda" ToRole="MisMonedas" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK__Venta__MonedaId__4222D4EF" FromRole="Moneda" ToRole="Venta" />
+  </EntityType>
+  <EntityType Name="Usuario">
+    <Key>
+      <PropertyRef Name="UsuarioId" />
+    </Key>
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Email" Type="String" MaxLength="25" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Clave" Type="String" MaxLength="8" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Saldo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Estado" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Compras" Relationship="Self.FK__Compra__UsuarioI__3D5E1FD2" FromRole="Usuario" ToRole="Compra" />
+    <NavigationProperty Name="Historials" Relationship="Self.FK__Historial__Usuar__44FF419A" FromRole="Usuario" ToRole="Historial" />
+    <NavigationProperty Name="Ventas" Relationship="Self.FK__Venta__UsuarioId__412EB0B6" FromRole="Usuario" ToRole="Venta" />
+  </EntityType>
+  <EntityType Name="Venta">
+    <Key>
+      <PropertyRef Name="VentaId" />
+    </Key>
+    <Property Name="UsuarioId" Type="Int32" Nullable="false" />
+    <Property Name="VentaId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="MonedaId" Type="Int32" Nullable="false" />
+    <Property Name="Monto" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <Property Name="Fecha" Type="DateTime" Nullable="false" Precision="0" />
+    <NavigationProperty Name="Moneda" Relationship="Self.FK__Venta__MonedaId__4222D4EF" FromRole="Venta" ToRole="Moneda" />
+    <NavigationProperty Name="Usuario" Relationship="Self.FK__Venta__UsuarioId__412EB0B6" FromRole="Venta" ToRole="Usuario" />
+  </EntityType>
+  <EntityType Name="MisMoneda">
+    <Key>
+      <PropertyRef Name="MonedaId" />
+      <PropertyRef Name="Saldo" />
+    </Key>
+    <Property Name="MonedaId" Type="Int32" Nullable="false" />
+    <Property Name="Saldo" Type="Decimal" Precision="19" Scale="4" Nullable="false" />
+    <NavigationProperty Name="Moneda" Relationship="Self.FK__MisMoneda__Moned__3A81B327" FromRole="MisMonedas" ToRole="Moneda" />
+  </EntityType>
+  <Association Name="FK__Compra__MonedaId__3E52440B">
+    <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Moneda">
+        <PropertyRef Name="MonedaId" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="MonedaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Compra__UsuarioI__3D5E1FD2">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Compra" Type="Self.Compra" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Compra">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Historial__Moned__45F365D3">
+    <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
+    <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Moneda">
+        <PropertyRef Name="MonedaId" />
+      </Principal>
+      <Dependent Role="Historial">
+        <PropertyRef Name="MonedaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Historial__Usuar__44FF419A">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Historial" Type="Self.Historial" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Historial">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__MisMoneda__Moned__3A81B327">
+    <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
+    <End Role="MisMonedas" Type="Self.MisMoneda" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Moneda">
+        <PropertyRef Name="MonedaId" />
+      </Principal>
+      <Dependent Role="MisMonedas">
+        <PropertyRef Name="MonedaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Venta__MonedaId__4222D4EF">
+    <End Role="Moneda" Type="Self.Moneda" Multiplicity="1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Moneda">
+        <PropertyRef Name="MonedaId" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="MonedaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Venta__UsuarioId__412EB0B6">
+    <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+    <End Role="Venta" Type="Self.Venta" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Usuario">
+        <PropertyRef Name="UsuarioId" />
+      </Principal>
+      <Dependent Role="Venta">
+        <PropertyRef Name="UsuarioId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="WalletEntitiesDB" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Compras" EntityType="Self.Compra" />
+    <EntitySet Name="Historials" EntityType="Self.Historial" />
+    <EntitySet Name="Monedas" EntityType="Self.Moneda" />
+    <EntitySet Name="Usuarios" EntityType="Self.Usuario" />
+    <EntitySet Name="Ventas" EntityType="Self.Venta" />
+    <EntitySet Name="MisMonedas" EntityType="Self.MisMoneda" />
+    <AssociationSet Name="FK__Compra__MonedaId__3E52440B" Association="Self.FK__Compra__MonedaId__3E52440B">
+      <End Role="Moneda" EntitySet="Monedas" />
+      <End Role="Compra" EntitySet="Compras" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Compra__UsuarioI__3D5E1FD2" Association="Self.FK__Compra__UsuarioI__3D5E1FD2">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Compra" EntitySet="Compras" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Historial__Moned__45F365D3" Association="Self.FK__Historial__Moned__45F365D3">
+      <End Role="Moneda" EntitySet="Monedas" />
+      <End Role="Historial" EntitySet="Historials" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Historial__Usuar__44FF419A" Association="Self.FK__Historial__Usuar__44FF419A">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Historial" EntitySet="Historials" />
+    </AssociationSet>
+    <AssociationSet Name="FK__MisMoneda__Moned__3A81B327" Association="Self.FK__MisMoneda__Moned__3A81B327">
+      <End Role="Moneda" EntitySet="Monedas" />
+      <End Role="MisMonedas" EntitySet="MisMonedas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Venta__MonedaId__4222D4EF" Association="Self.FK__Venta__MonedaId__4222D4EF">
+      <End Role="Moneda" EntitySet="Monedas" />
+      <End Role="Venta" EntitySet="Ventas" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Venta__UsuarioId__412EB0B6" Association="Self.FK__Venta__UsuarioId__412EB0B6">
+      <End Role="Usuario" EntitySet="Usuarios" />
+      <End Role="Venta" EntitySet="Ventas" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
